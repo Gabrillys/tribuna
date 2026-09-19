@@ -55,13 +55,26 @@
   <div>Tribuna</div>
 </div>
 
-<!-- TROQUE A URL ABAIXO PELO SEU LINK /exec DO APPS SCRIPT -->
+<!-- O token vem de ?token=... na URL (link pessoal de cada um) ou,
+     se faltar (ex: ícone instalado na tela inicial, sem parâmetros),
+     do que foi salvo da última vez que essa pessoa abriu o link. -->
 <iframe id="frame"
-        src="https://script.google.com/macros/s/AKfycbxBtoZq5jjaJIUVi6qXCNBlvFHAlgG7ZcqOiMwPjkvgXq4GfObfSK3gdOD4a7k56sUt/exec?token=meuacesso2026"
         title="Tribuna"
         allow="clipboard-write"
         onload="document.getElementById('loading').classList.add('hide')">
 </iframe>
+
+<script>
+  const EXEC_URL = 'https://script.google.com/macros/s/AKfycbxBtoZq5jjaJIUVi6qXCNBlvFHAlgG7ZcqOiMwPjkvgXq4GfObfSK3gdOD4a7k56sUt/exec';
+  const params = new URLSearchParams(location.search);
+  let token = params.get('token');
+  if (token) {
+    try { localStorage.setItem('tribuna_token', token); } catch (e) {}
+  } else {
+    try { token = localStorage.getItem('tribuna_token') || ''; } catch (e) { token = ''; }
+  }
+  document.getElementById('frame').src = EXEC_URL + (token ? ('?token=' + encodeURIComponent(token)) : '');
+</script>
 
 </body>
 </html>
