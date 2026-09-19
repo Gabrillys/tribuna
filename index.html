@@ -17,7 +17,8 @@
 <style>
   html, body { margin: 0; padding: 0; height: 100%; background: #1E3A5F; overflow: hidden; }
   #frame {
-    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    position: fixed; top: 0; left: 0; width: 100vw;
+    height: 100vh; height: calc(var(--real-vh, 1vh) * 100);
     border: none; display: block;
   }
   #loading {
@@ -34,6 +35,18 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+<script>
+  // Corrige a barra de endereço dinâmica do Chrome/Safari mobile: sem
+  // isso, o iframe pode ficar mais alto que a área realmente visível
+  // na tela, cortando a parte de baixo do app (ex: botões de rodapé
+  // de um popup). Medimos a altura de verdade e usamos ela no CSS.
+  function ajustarAlturaFrame_(){
+    document.documentElement.style.setProperty('--real-vh', (window.innerHeight * 0.01) + 'px');
+  }
+  ajustarAlturaFrame_();
+  window.addEventListener('resize', ajustarAlturaFrame_);
+  window.addEventListener('orientationchange', () => setTimeout(ajustarAlturaFrame_, 200));
+</script>
 </head>
 <body>
 
