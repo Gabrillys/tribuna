@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Tribuna</title>
+
+<!-- PWA: permite "Adicionar à tela inicial" e abrir sem barra de endereço -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1E3A5F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tribuna">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #1E3A5F; overflow: hidden; }
+  #frame {
+    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    border: none; display: block;
+  }
+  #loading {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 14px; background: #1E3A5F; color: #FBF7F0;
+    font-family: -apple-system, 'Segoe UI', Arial, sans-serif; z-index: 10;
+    transition: opacity .3s ease;
+  }
+  #loading.hide { opacity: 0; pointer-events: none; }
+  .spinner {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 3px solid rgba(251,247,240,0.25); border-top-color: #C68A3E;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div>Tribuna</div>
+</div>
+
+<!-- TROQUE A URL ABAIXO PELO SEU LINK /exec DO APPS SCRIPT -->
+<iframe id="frame"
+        src="https://script.google.com/macros/s/SEU_ID_DE_IMPLANTACAO_AQUI/exec"
+        title="Tribuna"
+        allow="clipboard-write"
+        onload="document.getElementById('loading').classList.add('hide')">
+</iframe>
+
+</body>
+</html>
